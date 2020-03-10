@@ -2,7 +2,15 @@ function showPosition(position) {
                 
              var lat = position.coords.latitude;
              var lon = position.coords.longitude;
-            console.log(lat);}
+//             var a = parseInt(lat);
+             console.log(lat,lon);
+             
+
+             if ((lat > 33) && (lat < 34) && (lon<-84) && (lon>-85)){
+              console.log("This is the right location!");
+              boxDD.setAttribute('visible', 'true');
+             }
+    } // QUESTION, CAN I PUT THE FUNCTION OUTSITE THE ARFRAME?  && (-84>lon>-85))
     
 AFRAME.registerComponent('school-playground', {
         init: function () {
@@ -33,7 +41,6 @@ AFRAME.registerComponent('school-playground', {
 //            sceneEl.innerHTML = "Latitude: " + position.coords.latitude +
 //            "<br>Longitude: "  + position.coords.longitude;
         
-    
       tick: function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
