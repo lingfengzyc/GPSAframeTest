@@ -1,3 +1,33 @@
+
+function degrees_to_radians(degrees)
+{
+  var pi = Math.PI;
+  return degrees * (pi/180);
+}
+
+//Calculate whether the current lat and lon are within the desired radius of the target
+function inRadius(currentlat,currentlon,targetlat,targetlon,desiredRadius){
+    var R = 6371e3; // metres
+    var phi1 = degrees_to_radians(currentlat);
+    var phi2 = degrees_to_radians(targetlat);
+    var deltaphi = degrees_to_radians(targetlat-currentlat);
+    var deltalambda = degrees_to_radians(targetlon-currentlon);
+    
+    var a = Math.sin(deltaphi/2) * Math.sin(deltaphi/2) +
+            Math.cos(phi1) * Math.cos(phi2) *
+            Math.sin(deltalambda/2) * Math.sin(deltalambda/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    
+    var d = R * c;
+    if (d<desiredRadius) {
+      return true;
+    }
+    else {
+      return false;
+    }
+}
+
+
 function showPosition(position) {
                 
              var lat = position.coords.latitude;
@@ -5,13 +35,20 @@ function showPosition(position) {
 //             var a = parseInt(lat);
              console.log(lat,lon);
              
-
-             if ((lat > 33) && (lat < 34) && (lon<-84) && (lon>-85)){
-              console.log("This is the right location!");
+            // TSRB = 33.777560, -84.390040 -- put the target lat and lon here
+            TSRBlat = 33.777560;
+            TSRBlon = -84.390040;
+           
+            var targetRadius = 50; // Setting the desired radius to 50 meters - this can be changed
+             if (inRadius(lat,lon,TSRBlat,TSRBlon,targetRadius)){
+              console.log("Within radius!");
               boxDD.setAttribute('visible', 'true');
+             } else {
+              console.log("Outside of radius");
+              boxDD.setAttribute('visible', 'false');
              }
-    } // QUESTION, CAN I PUT THE FUNCTION OUTSITE THE ARFRAME?  && (-84>lon>-85))
-    
+        } 
+
 AFRAME.registerComponent('school-playground', {
         init: function () {
           // Solution for Handling Events.
