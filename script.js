@@ -36,8 +36,9 @@ function showPosition(position) {
              console.log(lat,lon);
              
             // TSRB = 33.777560, -84.390040 -- put the target lat and lon here
-            TSRBlat = 33.777560;
-            TSRBlon = -84.390040;
+            // Yuchen's apartment= 33.780667799999996 -84.4118362
+            TSRBlat = 33.780667799999996;
+            TSRBlon = -84.4118362;
            
             var targetRadius = 50; // Setting the desired radius to 50 meters - this can be changed
              if (inRadius(lat,lon,TSRBlat,TSRBlon,targetRadius)){
